@@ -9,10 +9,12 @@ public class PlayerController : MonoBehaviour
     public float speed;
     PhotonView view;
 
+    Health health;
 
     void Start()
     {
         view = GetComponent<PhotonView>();
+        health = FindObjectOfType<Health>();
     }
 
     // Update is called once per frame
@@ -28,4 +30,23 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("a");
+        if (view.IsMine)
+        {
+            print("b");
+            //If collides with enemy, take damage
+            if (collision.tag == "Enemy")
+            {
+                print("c");
+                health.TakeDamage();
+            }
+        }
+        
+    }
+
+
 }
