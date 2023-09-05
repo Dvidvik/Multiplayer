@@ -11,15 +11,18 @@ public class PlayerController : MonoBehaviour
 
     Health health;
 
+    LineRenderer rend;
+
     void Start()
     {
         view = GetComponent<PhotonView>();
         health = FindObjectOfType<Health>();
+        rend = FindObjectOfType<LineRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Is Local player
         if(view.IsMine)
         {
             //Calculating move position
@@ -27,6 +30,15 @@ public class PlayerController : MonoBehaviour
             Vector2 moveAmout = moveInput.normalized * speed * Time.deltaTime;
 
             transform.position += (Vector3)moveAmout;
+
+
+            //Start of the laser
+            rend.SetPosition(0, transform.position);
+        }
+        else
+        {
+            //End of laser
+            rend.SetPosition(1, transform.position);
         }
         
     }
@@ -34,14 +46,11 @@ public class PlayerController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("a");
         if (view.IsMine)
         {
-            print("b");
             //If collides with enemy, take damage
             if (collision.tag == "Enemy")
             {
-                print("c");
                 health.TakeDamage();
             }
         }
