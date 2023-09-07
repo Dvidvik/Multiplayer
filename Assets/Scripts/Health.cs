@@ -7,7 +7,7 @@ using Photon.Pun;
 public class Health : MonoBehaviour
 {
     public int health = 10;
-    public TMP_Text healthText;
+    public TMP_Text healthText; 
 
     PhotonView view;
 
@@ -31,6 +31,5 @@ public class Health : MonoBehaviour
         //Update UI
         healthText.text = health.ToString();
     }
-
 
 }

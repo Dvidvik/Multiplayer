@@ -124,6 +124,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  dashSpeed: 45
+  dashTime: 0.1
+  minX: -9
+  minY: -5
+  maxX: 9
+  maxY: 5
 --- !u!114 &-8055198139484821261
 MonoBehaviour:
   m_ObjectHideFlags: 0

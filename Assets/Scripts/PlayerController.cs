@@ -7,6 +7,12 @@ public class PlayerController : MonoBehaviour
 {
 
     public float speed;
+    float resetSpeed;
+    public float dashSpeed;
+    public float dashTime;
+
+    public float minX, minY, maxX, maxY;
+
     PhotonView view;
 
     Health health;
@@ -15,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        resetSpeed = speed;
         view = GetComponent<PhotonView>();
         health = FindObjectOfType<Health>();
         rend = FindObjectOfType<LineRenderer>();
@@ -31,6 +38,14 @@ public class PlayerController : MonoBehaviour
 
             transform.position += (Vector3)moveAmout;
 
+            Wrap();
+
+            //Dash
+            if(Input.GetKeyDown(KeyCode.Space) && moveInput != Vector2.zero)
+            {
+                StartCoroutine(Dash());
+            }
+
 
             //Start of the laser
             rend.SetPosition(0, transform.position);
@@ -43,7 +58,6 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (view.IsMine)
@@ -55,6 +69,36 @@ public class PlayerController : MonoBehaviour
             }
         }
         
+    }
+
+    void Wrap()
+    {
+        if(transform.position.x < minX)
+        {
+            transform.position = new Vector2(maxX, transform.position.y);
+        }
+        else if (transform.position.x > maxX)
+        {
+            transform.position = new Vector2(minX, transform.position.y);
+        }
+        else if (transform.position.y < minY)
+        {
+            transform.position = new Vector2(transform.position.x, maxY);
+        }
+        else if (transform.position.y > maxY)
+        {
+            transform.position = new Vector2(transform.position.x,minY);
+        }
+    }
+
+
+
+    IEnumerator Dash()
+    {
+        //Changes speed for a spesific time and then returns to normal
+        speed = dashSpeed;
+        yield return new WaitForSeconds(dashTime);
+        speed = resetSpeed;
     }
 
 

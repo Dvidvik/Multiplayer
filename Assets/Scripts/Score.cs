@@ -11,9 +11,9 @@ public class Score : MonoBehaviour
 
     PhotonView view;
 
-    private void Start()
+    private void Start() 
     {
-        view = GetComponent<PhotonView>();
+        view = GetComponent<PhotonView>();;
     }
 
     //Decreaces health
@@ -26,11 +26,10 @@ public class Score : MonoBehaviour
     //This function is synchronized
     [PunRPC]
     public void ScoreIncreaseRPC()
-    {
-        score++;
+    {   
+        score ++;
         //Update UI
-        scoreText.text = score.ToString();
+        scoreText.text = score.ToString(); 
     }
-
 
 }
