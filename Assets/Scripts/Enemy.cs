@@ -7,12 +7,14 @@ public class Enemy : MonoBehaviour
 {
     PlayerController[] players;
     PlayerController nearestPlayer;
+    Score score;
     public float speed;
 
     void Start()
     {
         //Gets list of all players
         players = FindObjectsOfType < PlayerController>();
+        score = FindObjectOfType< Score>();
     }
 
     private void Update()
@@ -41,10 +43,15 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Laser")
+        if(PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Destroy(this.gameObject);
+            if (collision.tag == "Laser")
+            {
+                PhotonNetwork.Destroy(this.gameObject);
+                score.ScoreIncrease();
+            }
         }
+        
     }
 
 
