@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,10 +14,10 @@ public class PlayerController : MonoBehaviour
 
     public float minX, minY, maxX, maxY;
 
+    public TMP_Text nameText;
+
     PhotonView view;
-
     Health health;
-
     LineRenderer rend;
 
     void Start()
@@ -25,6 +26,15 @@ public class PlayerController : MonoBehaviour
         view = GetComponent<PhotonView>();
         health = FindObjectOfType<Health>();
         rend = FindObjectOfType<LineRenderer>();
+
+        if(view.IsMine)
+        {
+            nameText.text = PhotonNetwork.NickName;
+        }
+        else
+        {
+            nameText.text = view.Owner.NickName;
+        }
     }
 
     void Update()

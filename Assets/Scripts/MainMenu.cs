@@ -12,6 +12,14 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public TMP_InputField createInput;
     public TMP_InputField joinInput;
 
+    public TMP_InputField nickNameNameInput;
+
+
+    public void ChangeNickname()
+    {
+        PhotonNetwork.NickName = nickNameNameInput.text;
+    }
+
 
     public void CreateRoom()
     {
